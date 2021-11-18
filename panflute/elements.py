@@ -181,10 +181,11 @@ class Para(Block):
         >>> para1 = Para(*content)
         >>> para2 = Para(Str('More'), Space, Str('words.'))
     """
-    __slots__ = ['_content']
+    __slots__ = ['_content', 'identifier', 'classes', 'attributes']
     _children = ['content']
 
-    def __init__(self, *args):
+    def __init__(self, *args, identifier='', classes=[], attributes={}):
+        self._set_ica(identifier, classes, attributes)
         self._set_content(args, Inline)
 
     def _slots_to_json(self):
@@ -745,9 +746,10 @@ class Math(Inline):
     :Base: :class:`Inline`
      """
 
-    __slots__ = ['text', 'format']
+    __slots__ = ['text', 'format', 'identifier', 'classes', 'attributes']
 
-    def __init__(self, text, format='DisplayMath'):
+    def __init__(self, text, format='DisplayMath', identifier='', classes=[], attributes={}):
+        self._set_ica(identifier, classes, attributes)
         self.text = check_type(text, str)
         self.format = check_group(format, MATH_FORMATS)
 
